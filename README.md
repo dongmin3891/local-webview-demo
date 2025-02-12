@@ -95,6 +95,24 @@ window.addEventListener("message", (event) => {
 });
 ```
 
+#### 네이티브에서 웹에서 받은 메시지 처리
+
+네이티브 앱은 웹에서 보낸 메시지를 `onMessage` 핸들러를 통해 수신하고 처리할 수 있습니다. 예를 들어, 다음과 같이 메시지를 처리할 수 있습니다:
+
+```typescript
+// 네이티브 코드 (app/(tabs)/index.tsx)
+const onMessage = (event: any) => {
+  const data = JSON.parse(event.nativeEvent.data);
+  console.log("웹에서 받은 메시지:", data);
+
+  // 메시지 타입에 따라 다른 로직 처리
+  if (data.type === "WEB_MESSAGE") {
+    // 웹에서 보낸 메시지 처리
+    alert(`웹에서 받은 메시지: ${data.data}`);
+  }
+};
+```
+
 #### 커스텀 웹뷰 통신
 
 네이티브에서 `injectedJavaScript`를 통해 웹뷰에 JavaScript 코드를 주입하여 통신을 커스텀할 수 있습니다. 예를 들어, `VideoPortalJS` 객체를 사용하여 메시지를 보낼 수 있습니다:
